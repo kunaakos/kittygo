@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
-  Route,
-  Link
+  Route
 } from 'react-router-dom'
+
 import './App.css';
 
+import Nav from '../Nav/Nav'
+import Home from '../Home/Home'
 import Cats from '../Cats/Cats'
 
 class App extends Component {
@@ -13,14 +15,7 @@ class App extends Component {
     return (
       <Router>
         <div>
-
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/cats">Cats</Link></li>
-          </ul>
-
-          <hr />
-
+          <Nav />
           <Route exact path="/" component={Home} />
           <Route path="/cats" component={Cats} />
         </div>
@@ -29,14 +24,4 @@ class App extends Component {
   }
 }
 
-class Home extends Component {
-  render() {
-    return (
-      <div>
-        <h2>O hai!</h2>
-      </div>
-    )
-  }
-}
-
-export default App;
+export default App

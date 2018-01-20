@@ -1,0 +1,19 @@
+ul.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #cacaca;
+    li {
+        float: left;
+        padding: 10px;
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+    } 
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
