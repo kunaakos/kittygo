@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 
+import './Cats.css'
+
+import CatList from '../CatList/CatList';
+
 class Cats extends Component {
     render() {
         return (
-            <div>
-                <h2>Kittiez!</h2>
+            <div className="catlist-wrapper">
+                <CatList />
             </div>
         )
     }

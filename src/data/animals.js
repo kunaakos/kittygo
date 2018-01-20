@@ -13,6 +13,16 @@ function randomString(strings) {
     return strings[randomInt(0, strings.length - 1)];
 }
 
+function* generateUid(string) {
+    let index = 0;
+    while (true) {
+        yield `${string}${index.toString().padStart(6, "0")}`
+        index++
+    }
+}
+
+const generateCatId = generateUid("CT")
+
 export function canIHazCat() {
     return {
         name: randomString(CAT_STRINGS.names),
@@ -20,7 +30,8 @@ export function canIHazCat() {
         eyeColor: randomString(CAT_STRINGS.eyeColors),
         personality: randomString(CAT_STRINGS.personalities),
         age: randomInt(0, 17),
-        weight: randomInt(20, 60) / 10
+        weight: randomInt(20, 60) / 10,
+        UID: generateCatId.next().value
     }
 }
 
