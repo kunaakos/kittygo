@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => {
 class CatFilters extends Component {
 
     render() {
-        let filterList = Object.values(this.props.filters)
+        let filterList = Object.values(this.props.filters.values)
             .map((filter) => (
                 <CheckboxFilter
                     data={filter}

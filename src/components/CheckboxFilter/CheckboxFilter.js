@@ -21,7 +21,7 @@ class CheckboxFilter extends PureComponent {
 
     render() {
 
-        let filterOptionList = Object.values(this.props.data.options)
+        let filterOptionList = Object.values(this.props.data.options.values)
             .map((option) => (
                 <div
                     className="filteroption"

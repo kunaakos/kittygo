@@ -1,8 +1,6 @@
-import * as R from 'ramda'
-// import * as _ from 'lodash'
-
 // @flow
-import type { FilterCollection, Filter, FilterOptionCollection, FilterOption, Predicate } from './filtering.types'
+
+import type { FilterCollection, Predicate } from './filtering.types'
 
 import { ADD_CATS, SET_CAT_FILTER } from '../actions'
 import { canIHazCats } from '../data/animals';
@@ -22,15 +20,15 @@ const initialState = {
     displayedCats: initialDisplayedCats
 };
 
-const rootReducer = (state = initialState, action) => {
+const rootReducer = (state: any = initialState, action: any) => {
 
     switch (action.type) {
 
         case ADD_CATS: {
-            const cats = [...action.payload, ...state.cats]
+            const cats: any[] = [...action.payload, ...state.cats]
             const catFilters: FilterCollection = createFilters(FILTER_PROPERTIES, cats)
-            const catPredicates: Predicate[] = createPredicates(catFilters)
-            const displayedCats = filterList(cats, catPredicates).slice(0, 10)
+            const catPredicates: Predicate<any>[] = createPredicates(catFilters)
+            const displayedCats: any[] = filterList(cats, catPredicates).slice(0, 10)
 
             return {
                 ...state,
@@ -41,12 +39,12 @@ const rootReducer = (state = initialState, action) => {
         }
 
         case SET_CAT_FILTER: {
-            const { filterName, filterValueName, filterValue } = action.payload
-            let catFilters = {...state.catFilters}
-            catFilters[filterName].options[filterValueName].selected = filterValue
-            const cats = state.cats
-            const catPredicates = createPredicates(catFilters)
-            const displayedCats = filterList(cats, catPredicates).slice(0, 10)
+            const { filterName, filterValueName, filterValue }: {filterName: string, filterValueName: string, filterValue: boolean} = action.payload
+            let catFilters: FilterCollection = {...state.catFilters}
+            catFilters.values[filterName].options.values[filterValueName].selected = filterValue
+            const cats: any[] = state.cats
+            const catPredicates: Predicate<any>[] = createPredicates(catFilters)
+            const displayedCats: any[] = filterList(cats, catPredicates).slice(0, 10)
 
             return {
                 ...state,

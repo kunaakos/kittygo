@@ -6,13 +6,13 @@ import type { FilterCollection, Filter, FilterOptionCollection, FilterOption, Pr
 
 // return a collection of filter objects
 export function createFilters(filterPropertyNames: string[], list: any[]): FilterCollection {
-    return filterPropertyNames.reduce(createFilterReducerFor(list), {})
+    return filterPropertyNames.reduce(createFilterReducerFor(list), {values:{}, keys: []})
 }
 
 // return an array of predicate functions created from a set of filter objects
 export function createPredicates(filters: FilterCollection): Predicate<any>[] {
     // $FlowFixMe
-    return Object.values(filters).map(createPredicate)
+    return Object.values(filters.values).map(createPredicate)
 }
 
 // filter a list using an array of predicates, all of which need to be  for an element to pass
@@ -33,9 +33,9 @@ function isSelected(filterOption: FilterOption): boolean {
 
 // get the values of the filter options that are selected (set to true)
 function getSelectedFilterValues(filterOptions: FilterOptionCollection): string[] {
-    let selectedFilterOptions = _.pickBy(filterOptions, isSelected)
+    let selectedFilterOptions = _.pickBy(filterOptions.values, isSelected)
     // $FlowFixMe    
-    return Object.values(selectedFilterOptions).map((filterOption) => filterOption.value)
+    return Object.values(selectedFilterOptions).map((filterOption) => filterOption.propertyValue)
 }
 
 // true if an item's propertyName is one of the selectedValues
@@ -46,10 +46,11 @@ function hasSelectedValue(item: any, propertyName: string, selectedValues: strin
 // create a reducer function for a given list...
 function createFilterReducerFor(list: any) {
     // ... which is used to reduce a list of filerPropertyNames to a set of filter objects
-    return (filters: FilterCollection, filterPropertyName: string) => {
+    return (filters: FilterCollection, filterPropertyName: string): FilterCollection => {
         let filterValues: string[] = getUniqueValuesOf(filterPropertyName, list)
         let filter: Filter = createFilter(filterPropertyName, filterValues)
-        filters[filterPropertyName] = filter
+        filters.values[filterPropertyName] = filter
+        filters.keys.push(filter.ID)
         return filters
     }
 }
@@ -57,21 +58,24 @@ function createFilterReducerFor(list: any) {
 // create a single filter option object
 function createFilterOption(filterValue: string): FilterOption {
     return {
+        ID: filterValue,
         name: filterValue,
-        value: filterValue,
+        propertyValue: filterValue,
         selected: true
     }
 }
 
 // callback function used by createFilterOptions
 function filterOptionsReduceCallback(filterOptions: FilterOptionCollection, filterValue: string): FilterOptionCollection {
-    filterOptions[filterValue] = createFilterOption(filterValue)
+    let filterOption = createFilterOption(filterValue)
+    filterOptions.values[filterValue] = filterOption
+    filterOptions.keys.push(filterOption.ID)
     return filterOptions
 }
 
 // create a collection of filter options from a set of filter values
 function createFilterOptions(filterValues: string[]): FilterOptionCollection { 
-    return filterValues.reduce(filterOptionsReduceCallback, {})
+    return filterValues.reduce(filterOptionsReduceCallback, {values: {}, keys: []})
 }
 
 // create filter object from filterPropertyName with the given values (set to true by default)
@@ -79,6 +83,7 @@ function createFilter(filterPropertyName: string, filterValues: string[]): Filte
     return {
         name: filterPropertyName,
         propertyName: filterPropertyName,
+        ID: filterPropertyName,
         options: createFilterOptions(filterValues)
     }
 }
