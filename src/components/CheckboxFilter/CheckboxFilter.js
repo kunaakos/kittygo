@@ -1,10 +1,10 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 
 import './CheckboxFilter.css';
 
 import CheckBox from '../Checkbox/CheckBox';
 
-class CheckboxFilter extends PureComponent {
+class CheckboxFilter extends Component {
 
     constructor(props) {
         super(props)
@@ -28,7 +28,8 @@ class CheckboxFilter extends PureComponent {
                     key={option.name}
                 >
                     <CheckBox
-                        data={option}
+                        name={option.name}
+                        isChecked={option.selected}
                         update={this.handleChange}
                     />
                 </div>

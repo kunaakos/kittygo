@@ -1,5 +1,7 @@
 // @flow
 
+import cloneDeep from 'lodash/cloneDeep'
+
 import type { FilterCollection, Predicate } from './types'
 
 import { ADD_CATS, SET_CAT_FILTER } from '../actions'
@@ -40,11 +42,10 @@ const rootReducer = (state: any = initialState, action: any) => {
 
         case SET_CAT_FILTER: {
             const { filterName, filterValueName, filterValue }: {filterName: string, filterValueName: string, filterValue: boolean} = action.payload
-            let catFilters: FilterCollection = {...state.catFilters}
+            let catFilters: FilterCollection = cloneDeep(state.catFilters)
             catFilters.values[filterName].options.values[filterValueName].selected = filterValue
-            const cats: any[] = state.cats
             const catPredicates: Predicate<any>[] = createPredicates(catFilters)
-            const displayedCats: any[] = filterList(cats, catPredicates).slice(0, 10)
+            const displayedCats: any[] = filterList(state.cats, catPredicates).slice(0, 10)
 
             return {
                 ...state,
