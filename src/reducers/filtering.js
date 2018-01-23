@@ -1,7 +1,8 @@
 // @flow
 
-import * as R from 'ramda'
-import * as _ from 'lodash'
+import allPass from 'ramda/src/allPass'
+import uniq from 'lodash/uniq'
+import pickBy from 'lodash/pickBy'
 
 import type { FilterCollection, Filter, FilterOptionCollection, FilterOption, Predicate } from './types'
 
@@ -21,7 +22,7 @@ export function createPredicates(filters: FilterCollection): Predicate<any>[] {
 
 // filter a list using an array of predicates, all of which need to be  for an element to pass
 export function filterList(list: any, predicates: Predicate<any>[]) {
-    return list.filter(R.allPass(predicates))
+    return list.filter(allPass(predicates))
 }
 
 // return a predicate function that can be used for array.filter() created based on a filter object
@@ -37,7 +38,7 @@ function isSelected(filterOption: FilterOption): boolean {
 
 // get the values of the filter options that are selected (set to true)
 function getSelectedFilterValues(filterOptions: FilterOptionCollection): string[] {
-    let selectedFilterOptions = _.pickBy(filterOptions.values, isSelected)
+    let selectedFilterOptions = pickBy(filterOptions.values, isSelected)
     // $FlowFixMe    
     return Object.values(selectedFilterOptions).map((filterOption) => filterOption.propertyValue)
 }
@@ -102,5 +103,5 @@ function createFilter(filterPropertyName: string, filterValues: string[]): Filte
 
 // get unique values of filterProperty from list
 function getUniqueValuesOf(filterProperty, list): string[] {
-    return _.uniq(list.map(item => item[filterProperty]))
+    return uniq(list.map(item => item[filterProperty]))
 }
