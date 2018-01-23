@@ -1,0 +1,40 @@
+div.checkboxfilter {
+    margin-bottom: 10px;
+    
+    .filtername {
+        background-color: #666;
+        padding: 10px;
+        text-align: right;
+        color: #fff;
+    }
+    .filteroption {
+        padding: 2px 0 2px 0;
+        margin-left: 10%;
+        background-color: #cacaca;
+        color: #fff;
+
+        // STOLE IT
+        // https://codepen.io/sans383/pen/epOKKj
+        input[type="checkbox"] {
+            position: absolute;
+            clip: rect(0, 0, 0, 0);
+        }
+          
+        input[type="checkbox"] + label::before {
+            content: '\a0';
+            display: inline-block;
+            margin: .2em .5em;
+            width: .8em;
+            height: .8em;
+            line-height: .75em;
+            border: 1px solid #fff;
+        }
+          
+        input[type="checkbox"]:checked + label::before {
+            content: '\a0';
+            background: #666;
+            border: 1px solid #fff;
+        }
+    }
+}
+

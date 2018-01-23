@@ -1,5 +1,14 @@
-div.catlist-wrapper {
+div.cats {
     padding-top: 30px;
-    width: 60%;
-    margin: auto;
+    .cats-wrapper {
+        display: inline-block;
+        vertical-align: top;
+    }
+    .catfilters-wrapper {
+        width: 30%;
+    }
+    .catlist-wrapper {
+        width: 60%;
+        padding: 0 5%;
+    }
 }

@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
 import './CatCard.css'
 
-class CatCard extends Component {
+class CatCard extends PureComponent {
     render() {
         return (
             <div className="catcard">
