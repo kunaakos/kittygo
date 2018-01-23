@@ -2,11 +2,15 @@
 
 import * as R from 'ramda'
 import * as _ from 'lodash'
-import type { FilterCollection, Filter, FilterOptionCollection, FilterOption, Predicate } from './filtering.types'
+
+import type { FilterCollection, Filter, FilterOptionCollection, FilterOption, Predicate } from './types'
+
+import { sortOrderedCollection } from './collections';
 
 // return a collection of filter objects
 export function createFilters(filterPropertyNames: string[], list: any[]): FilterCollection {
-    return filterPropertyNames.reduce(createFilterReducerFor(list), {values:{}, keys: []})
+    let filters = filterPropertyNames.reduce(createFilterReducerFor(list), {values:{}, keys: []})
+    return filters
 }
 
 // return an array of predicate functions created from a set of filter objects
@@ -73,9 +77,17 @@ function filterOptionsReduceCallback(filterOptions: FilterOptionCollection, filt
     return filterOptions
 }
 
+function filterOptionsCompareFn(a: FilterOption, b: FilterOption) {
+    if (a.name > b.name) return 1
+    if (a.name < b.name) return -1
+    return 0
+}
+
 // create a collection of filter options from a set of filter values
 function createFilterOptions(filterValues: string[]): FilterOptionCollection { 
-    return filterValues.reduce(filterOptionsReduceCallback, {values: {}, keys: []})
+    let filterOptions = filterValues.reduce(filterOptionsReduceCallback, {values: {}, keys: []})
+    filterOptions = sortOrderedCollection(filterOptions, filterOptionsCompareFn)
+    return filterOptions
 }
 
 // create filter object from filterPropertyName with the given values (set to true by default)

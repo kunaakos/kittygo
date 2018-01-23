@@ -1,6 +1,6 @@
 // @flow
 
-import type { FilterCollection, Predicate } from './filtering.types'
+import type { FilterCollection, Predicate } from './types'
 
 import { ADD_CATS, SET_CAT_FILTER } from '../actions'
 import { canIHazCats } from '../data/animals';
