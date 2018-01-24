@@ -10,7 +10,7 @@ import './index.css';
 import App from './components/App/App';
 
 import registerServiceWorker from './registerServiceWorker';
-import { canIHazCats } from './data/animals';
+import { canIHazCats } from './data/pets';
 
 ReactDOM.render(
     <Provider store={store}>

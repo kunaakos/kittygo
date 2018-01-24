@@ -1,24 +1,10 @@
-export const CAT_STRINGS = {
+import { generateUid, randomString, randomInt } from "../lib/util";
+
+const CAT_STRINGS = {
     coatColors: ["black", "chocolate", "lilac", "fawn", "white", "tabby", "spotted tabby"],
     eyeColors: ["brown", "hazel", "gold", "green", "blue"],
     personalities: ["quiet", "vocal", "active", "loving", "mean-spirited", "playful", "shifty"],
     names: ["Miffy", "Suzy", "Herbert", "Ashes", "Molly", "Charlie", "Tigger", "Poppy", "Oscar", "Chester", "Millie", "Daisy", "Max", "Jasper", "Trevor"]
-}
-
-function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min)
-}
-
-function randomString(strings) {
-    return strings[randomInt(0, strings.length - 1)];
-}
-
-function* generateUid(string) {
-    let index = 0;
-    while (true) {
-        yield `${string}${index.toString().padStart(6, "0")}`
-        index++
-    }
 }
 
 const generateCatId = generateUid("CT")

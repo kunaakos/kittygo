@@ -2,12 +2,12 @@
 
 import cloneDeep from 'lodash/cloneDeep'
 
-import type { FilterCollection, Predicate } from './types'
+import type { FilterCollection, Predicate } from '../lib/types'
 
 import { ADD_CATS, SET_CAT_FILTER } from '../actions'
-import { canIHazCats } from '../data/animals';
+import { canIHazCats } from '../data/pets';
 
-import { createFilters, createPredicates, filterList } from './filtering';
+import { createFilters, createPredicates, filterList } from '../lib/filtering';
 
 const FILTER_PROPERTIES = ['coatColor', 'eyeColor', 'personality']
 

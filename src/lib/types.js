@@ -1,5 +1,8 @@
 // @flow
 
+export type Predicate<T> = (input: T) => boolean
+export type CompareFn<T> = (a: T, b: T) => -1 | 0 | 1
+
 export type OrderedCollection<T> = {
     values: {
         [ID: string]: T
@@ -13,7 +16,6 @@ export type FilterOption = {
     propertyValue: string,
     selected: boolean
 }
-
 export type FilterOptionCollection = OrderedCollection<FilterOption>
 
 export type Filter = {
@@ -22,10 +24,4 @@ export type Filter = {
     propertyName: string,
     options: FilterOptionCollection
 }
-
 export type FilterCollection = OrderedCollection<Filter>
-
-
-export type Predicate<T> = (input: T) => boolean
-
-export type CompareFn<T> = (a: T, b: T) => -1 | 0 | 1
